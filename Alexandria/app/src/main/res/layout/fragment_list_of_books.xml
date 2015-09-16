@@ -45,7 +45,20 @@
                   android:layout_alignParentStart="true"
                   android:layout_toRightOf="@id/searchButton"/>
 
-
+        <TextView
+            android:id="@+id/listOfBooks_empty"
+            android:text="@string/empty_book_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal"
+            android:layout_below="@+id/searchText"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:paddingEnd="@dimen/activity_horizontal_margin"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingStart="@dimen/activity_horizontal_margin"
+            android:paddingTop="@dimen/activity_vertical_margin"
+            android:paddingBottom="@dimen/activity_vertical_margin"
+            />
 
     </RelativeLayout>
 
