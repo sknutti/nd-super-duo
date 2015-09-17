@@ -8,6 +8,7 @@ import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SyncRequest;
 import android.content.SyncResult;
 import android.net.Uri;
@@ -39,11 +40,14 @@ public class SyncAdapter  extends AbstractThreadedSyncAdapter {
     public static final int SYNC_INTERVAL = 60 * 60;   // seconds * minutes, sync interval
     public static final int SYNC_FLEXTIME = SYNC_INTERVAL/3;
     private static final String API = "http://api.football-data.org/alpha";
-    private static final String API_KEY = "4e387578bd634a64bad24f9a775998be";
+    public static final String ACTION_DATA_UPDATED = "barqsoft.footballscores.ACTION_DATA_UPDATED";
+
+    private Context mContext;
 
 
     public SyncAdapter(Context context, boolean autoInitialize) {
         super(context, autoInitialize);
+        mContext = context;
     }
 
     @Override
@@ -55,8 +59,8 @@ public class SyncAdapter  extends AbstractThreadedSyncAdapter {
 
         ServiceApi api = restAdapter.create(ServiceApi.class);
 
-        api.fetchData(API_KEY, "n2", getFetchDataCallback());
-        api.fetchData(API_KEY, "p2", getFetchDataCallback());
+        api.fetchData(mContext.getString(R.string.api_key), "n3", getFetchDataCallback());
+        api.fetchData(mContext.getString(R.string.api_key), "p3", getFetchDataCallback());
     }
 
     private Callback<FixtureList> getFetchDataCallback() {
@@ -117,6 +121,8 @@ public class SyncAdapter  extends AbstractThreadedSyncAdapter {
                     values.toArray(insert_data);
                     inserted_data = getContext().getContentResolver().bulkInsert(
                             ScoresContract.BASE_CONTENT_URI, insert_data);
+
+                    updateWidgets();
                 }
             }
 
@@ -125,6 +131,13 @@ public class SyncAdapter  extends AbstractThreadedSyncAdapter {
                 Log.e(LOG_TAG, "Failed to fetch data from football-data.org...");
             }
         };
+    }
+
+    private void updateWidgets() {
+        Context context = getContext();
+        // Setting the package ensures that only components in this app will receive the broadcast
+        Intent dataUpdatedIntent = new Intent(ACTION_DATA_UPDATED).setPackage(context.getPackageName());
+        context.sendBroadcast(dataUpdatedIntent);
     }
 
     /**

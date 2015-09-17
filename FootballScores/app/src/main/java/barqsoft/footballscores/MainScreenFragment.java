@@ -23,6 +23,7 @@ public class MainScreenFragment extends Fragment implements LoaderManager.Loader
     public static final int SCORES_LOADER = 0;
     private String[] fragmentdate = new String[1];
     private int last_selected_item = -1;
+    private View mEmptyView;
 
     public interface Callback {
         /**
@@ -41,6 +42,7 @@ public class MainScreenFragment extends Fragment implements LoaderManager.Loader
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, final Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
+        mEmptyView = rootView.findViewById(R.id.empty_view);
 
 //        RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.scores_list);
 //        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -97,6 +99,7 @@ public class MainScreenFragment extends Fragment implements LoaderManager.Loader
         }
 
         mAdapter.swapCursor(cursor);
+        mEmptyView.setVisibility(cursor.getCount() == 0 ? View.VISIBLE : View.GONE);
     }
 
     @Override
