@@ -7,9 +7,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-
 import java.util.List;
 
 import it.jaschke.alexandria.api.ServiceAPI;
@@ -128,36 +125,6 @@ public class BookService extends IntentService {
 
             }
         });
-    }
-
-    private void writeBackBook(String ean, String title, String subtitle, String desc, String imgUrl) {
-        ContentValues values= new ContentValues();
-        values.put(AlexandriaContract.BookEntry._ID, ean);
-        values.put(AlexandriaContract.BookEntry.TITLE, title);
-        values.put(AlexandriaContract.BookEntry.IMAGE_URL, imgUrl);
-        values.put(AlexandriaContract.BookEntry.SUBTITLE, subtitle);
-        values.put(AlexandriaContract.BookEntry.DESC, desc);
-        getContentResolver().insert(AlexandriaContract.BookEntry.CONTENT_URI, values);
-    }
-
-    private void writeBackAuthors(String ean, JSONArray jsonArray) throws JSONException {
-        ContentValues values= new ContentValues();
-        for (int i = 0; i < jsonArray.length(); i++) {
-            values.put(AlexandriaContract.AuthorEntry._ID, ean);
-            values.put(AlexandriaContract.AuthorEntry.AUTHOR, jsonArray.getString(i));
-            getContentResolver().insert(AlexandriaContract.AuthorEntry.CONTENT_URI, values);
-            values= new ContentValues();
-        }
-    }
-
-    private void writeBackCategories(String ean, JSONArray jsonArray) throws JSONException {
-        ContentValues values= new ContentValues();
-        for (int i = 0; i < jsonArray.length(); i++) {
-            values.put(AlexandriaContract.CategoryEntry._ID, ean);
-            values.put(AlexandriaContract.CategoryEntry.CATEGORY, jsonArray.getString(i));
-            getContentResolver().insert(AlexandriaContract.CategoryEntry.CONTENT_URI, values);
-            values= new ContentValues();
-        }
     }
 
     private boolean checkBook(List<IndustryIdentifier> isbnList) {
