@@ -21,12 +21,12 @@ public class DbHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
 
         final String SQL_CREATE_BOOK_TABLE = "CREATE TABLE " + AlexandriaContract.BookEntry.TABLE_NAME + " ("+
-                AlexandriaContract.BookEntry._ID + " INTEGER PRIMARY KEY," +
+                AlexandriaContract.BookEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+                AlexandriaContract.BookEntry.ISBN + " TEXT NOT NULL," +
                 AlexandriaContract.BookEntry.TITLE + " TEXT NOT NULL," +
                 AlexandriaContract.BookEntry.SUBTITLE + " TEXT ," +
                 AlexandriaContract.BookEntry.DESC + " TEXT ," +
-                AlexandriaContract.BookEntry.IMAGE_URL + " TEXT, " +
-                "UNIQUE ("+ AlexandriaContract.BookEntry._ID +") ON CONFLICT IGNORE)";
+                AlexandriaContract.BookEntry.IMAGE_URL + " TEXT)";
 
         final String SQL_CREATE_AUTHOR_TABLE = "CREATE TABLE " + AlexandriaContract.AuthorEntry.TABLE_NAME + " ("+
                 AlexandriaContract.AuthorEntry._ID + " INTEGER," +

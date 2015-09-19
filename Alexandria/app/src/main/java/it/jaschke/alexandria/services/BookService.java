@@ -93,7 +93,7 @@ public class BookService extends IntentService {
 
                             //add to database
                             ContentValues values = new ContentValues();
-                            values.put(AlexandriaContract.BookEntry._ID, book.getIndustryIdentifiers().get(1).getIdentifier());
+                            values.put(AlexandriaContract.BookEntry.ISBN, book.getIndustryIdentifiers().get(1).getIdentifier());
                             values.put(AlexandriaContract.BookEntry.TITLE, book.getTitle());
                             values.put(AlexandriaContract.BookEntry.SUBTITLE, book.getSubtitle());
                             values.put(AlexandriaContract.BookEntry.DESC, book.getDescription());
@@ -133,7 +133,7 @@ public class BookService extends IntentService {
                 if (industryIdentifier.getType().equals("ISBN_13")) {
                     Cursor result = getContentResolver().query(AlexandriaContract.BookEntry.CONTENT_URI,
                             null,
-                            AlexandriaContract.BookEntry._ID + " = ?",
+                            AlexandriaContract.BookEntry.ISBN + " = ?",
                             new String[]{industryIdentifier.getIdentifier()},
                             null);
                     int count = result.getCount();

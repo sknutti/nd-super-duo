@@ -7,7 +7,6 @@ package it.jaschke.alexandria.data;
 import android.content.ContentUris;
 import android.net.Uri;
 import android.provider.BaseColumns;
-import android.util.Log;
 
 public class AlexandriaContract{
 
@@ -32,6 +31,8 @@ public class AlexandriaContract{
                 "vnd.android.cursor.item/" + CONTENT_AUTHORITY + "/" + PATH_BOOKS;
 
         public static final String TABLE_NAME = "books";
+
+        public static final String ISBN = "isbn";
 
         public static final String TITLE = "title";
 
